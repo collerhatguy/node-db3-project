@@ -1,4 +1,7 @@
+const db = require("../../data/db-config")
+
 function find() { // EXERCISE A
+  db("schemas")
   /*
     1A- Study the SQL query below running it in SQLite Studio against `data/schemes.db3`.
     What happens if we change from a LEFT join to an INNER join?
