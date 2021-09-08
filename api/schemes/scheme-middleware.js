@@ -28,7 +28,10 @@ const checkSchemeId = (req, res, next) => {
   }
 */
 const validateScheme = (req, res, next) => {
-
+  const { scheme_name } = req.body 
+  !scheme_name && next({ status: 400, message: "invalid scheme_name" })
+  typeof scheme_name !== "string" && next({ status: 400, message: "invalid scheme_name" })
+  next()
 }
 
 /*
@@ -41,7 +44,12 @@ const validateScheme = (req, res, next) => {
   }
 */
 const validateStep = (req, res, next) => {
-
+  const { instructions, step_number } = req.body
+  !instructions && next({ status: 400, message: "invalid step" })
+  typeof instructions !== "string" && next({ status: 400, message: "invalid step" })
+  step_number < 1 && next({ status: 400, message: "invalid step" })
+  typeof step_number !== "number" && next({ status: 400, message: "invalid step" })
+  next()
 }
 
 module.exports = {
