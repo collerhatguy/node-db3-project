@@ -9,13 +9,13 @@ const { findById } = require("./scheme-model")
   }
 */
 const checkSchemeId = (req, res, next) => {
-  const { schema_id } = req.params
-  findById(schema_id).then(schema => {
-    if (schema) {
-      req.schema = schema
+  const { scheme_id } = req.params
+  findById(scheme_id).then(scheme => {
+    if (scheme) {
+      req.scheme = scheme
       next()
     }
-    next({ status: 404, message: `scheme with scheme_id ${schema_id} not found` })
+    next({ status: 404, message: `scheme with scheme_id ${scheme_id} not found` })
   })
 }
 
@@ -45,10 +45,9 @@ const validateScheme = (req, res, next) => {
 */
 const validateStep = (req, res, next) => {
   const { instructions, step_number } = req.body
-  !instructions && next({ status: 400, message: "invalid step" })
-  typeof instructions !== "string" && next({ status: 400, message: "invalid step" })
-  step_number < 1 && next({ status: 400, message: "invalid step" })
-  typeof step_number !== "number" && next({ status: 400, message: "invalid step" })
+  if (
+    !instructions || typeof instructions !== "string" || step_number < 1 || typeof step_number !== "number"
+  ) next({ status: 400, message: "invalid step" })
   next()
 }
 
