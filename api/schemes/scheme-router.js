@@ -77,11 +77,6 @@ router.get('/:scheme_id', checkSchemeId, (req, res) => {
 */
 router.get('/:scheme_id/steps', checkSchemeId, (req, res, next) => {
   const { scheme_id } = req.params
-  // const { scheme: { steps, scheme_name } } = req
-  // const newSteps = steps.map(step => ({ 
-  //   ...step, scheme_name 
-  // }))
-  // res.json(newSteps)
   Schemes.findSteps(scheme_id)
     .then(steps => {
       res.json(steps)

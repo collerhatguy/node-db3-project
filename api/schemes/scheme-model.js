@@ -1,7 +1,6 @@
 const db = require("../../data/db-config")
-const { steps } = require("../../data/seeds/02-steps")
 
-function find() { // EXERCISE A
+function find() {
   return db("schemes as sc")
     .leftJoin("steps as st", "sc.scheme_id", "st.scheme_id")
     .select("sc.*")
@@ -11,7 +10,7 @@ function find() { // EXERCISE A
 
 }
 
-async function findById(scheme_id) { // EXERCISE B
+async function findById(scheme_id) {
   const response = await db("schemes as sc")
     .leftJoin("steps as st", "sc.scheme_id", "st.scheme_id")
     .select("sc.scheme_name", "st.*")
@@ -42,19 +41,16 @@ function add(scheme) {
   return db("schemes")
     .insert(scheme)
     .then(([id]) => 
-      db("schemes").where({ scheme_id: id }).first()
+      db("schemes")
+        .where({ scheme_id: id })
+        .first()
     )
 }
 
-function addStep(scheme_id, step) { // EXERCISE E
+function addStep(scheme_id, step) {
   return db("steps")
     .insert({ ...step, scheme_id })
     .then(() => findSteps(scheme_id))
-  /*
-    1E- This function adds a step to the scheme with the given `scheme_id`
-    and resolves to _all the steps_ belonging to the given `scheme_id`,
-    including the newly created one.
-  */
 }
 
 module.exports = {
